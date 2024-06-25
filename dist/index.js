@@ -9,6 +9,7 @@ const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const auth_1 = __importDefault(require("./routes/auth"));
+const corsOptions_1 = require("./config/corsOptions");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 mongoose_1.default
@@ -19,7 +20,7 @@ mongoose_1.default
     .catch((err) => {
     console.log(err);
 });
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)(corsOptions_1.corsOptions));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.json());
