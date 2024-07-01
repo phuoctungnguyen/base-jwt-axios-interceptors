@@ -53,7 +53,7 @@ const login = async (req, res) => {
             return;
         }
         if (user && validPassword) {
-            const accessToken = await JwtProvider_1.JwtProvider.generateToken(user, accessKeySignature, "1h");
+            const accessToken = await JwtProvider_1.JwtProvider.generateToken(user, accessKeySignature, "600s");
             const refreshToken = await JwtProvider_1.JwtProvider.generateToken(user, refreshKeySignature, "14d");
             res.cookie("accessToken", accessToken, {
                 httpOnly: true,

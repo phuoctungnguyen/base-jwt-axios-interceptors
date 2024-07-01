@@ -56,7 +56,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       const accessToken = await JwtProvider.generateToken(
         user,
         accessKeySignature,
-        "1h"
+        "600s"
       );
       const refreshToken = await JwtProvider.generateToken(
         user,
