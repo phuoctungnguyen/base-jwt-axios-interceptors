@@ -16,5 +16,6 @@ export const corsOptions: CorsOptions = {
     return callback(null, true);
   },
   optionsSuccessStatus: 200,
+  // cors sẽ cho phép nhận cookie từ request
   credentials: true,
 };

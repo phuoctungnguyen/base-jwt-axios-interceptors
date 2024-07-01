@@ -10,6 +10,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const auth_1 = __importDefault(require("./routes/auth"));
 const corsOptions_1 = require("./config/corsOptions");
+const user_1 = __importDefault(require("./routes/user"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 mongoose_1.default
@@ -20,11 +21,15 @@ mongoose_1.default
     .catch((err) => {
     console.log(err);
 });
+app.use((_req, res, next) => {
+    res.set("Cache-Control", "no-store");
+    next();
+});
 app.use((0, cors_1.default)(corsOptions_1.corsOptions));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
-app.use(express_1.default.json());
 app.use("/api/users", auth_1.default);
+app.use("/api/getuser", user_1.default);
 app.listen(8000, () => {
     console.log("server is running");
 });
