@@ -82,3 +82,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json(err);
   }
 };
+
+export const logout = async (_req: Request, res: Response): Promise<void> => {
+  try {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    res.status(200).json("logout api success");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};

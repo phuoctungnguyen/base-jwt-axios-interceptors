@@ -12,17 +12,19 @@ const isAuthorized = async (
   res: Response,
   next: NextFunction
 ) => {
-  // const accessTokenFromCookie = req.cookies?.accessToken;
+  // const accessTokenFromCookie = req.cookies?.accessToken; //cach 1
   // console.log("accessTokenFromCookie", accessTokenFromCookie);
   // console.log("------------");
-  const accessTokenFromHeader = req.headers?.authorization;
+  const accessTokenFromHeader = req.headers?.authorization; // cach 2
   // console.log("accessTokenFromHeader", req.headers);
 
   // if (!accessTokenFromCookie) {
+  //   //cach 1
   //   res.status(401).json("Unauthorized! (Token not found)");
   //   return;
   // }
   if (!accessTokenFromHeader) {
+    // cach 2
     res.status(401).json("Unauthorized! (Token not found)");
     return;
   }

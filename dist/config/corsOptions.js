@@ -6,6 +6,5 @@ exports.corsOptions = {
         return callback(null, true);
     },
     optionsSuccessStatus: 200,
-    credentials: true,
 };
 //# sourceMappingURL=corsOptions.js.map

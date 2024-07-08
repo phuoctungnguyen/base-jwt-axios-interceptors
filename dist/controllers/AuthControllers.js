@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.registerUser = void 0;
+exports.logout = exports.login = exports.registerUser = void 0;
 const UserModel_1 = __importDefault(require("../models/UserModel"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const ms_1 = __importDefault(require("ms"));
@@ -76,4 +76,15 @@ const login = async (req, res) => {
     }
 };
 exports.login = login;
+const logout = async (_req, res) => {
+    try {
+        res.clearCookie("accessToken");
+        res.clearCookie("refreshToken");
+        res.status(200).json("logout api success");
+    }
+    catch (err) {
+        res.status(500).json(err);
+    }
+};
+exports.logout = logout;
 //# sourceMappingURL=AuthControllers.js.map
