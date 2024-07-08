@@ -8,5 +8,6 @@ const AuthControllers_1 = require("../controllers/AuthControllers");
 const router = express_1.default.Router();
 router.post("/register", AuthControllers_1.registerUser);
 router.post("/login", AuthControllers_1.login);
+router.delete("/logout", AuthControllers_1.logout);
 exports.default = router;
 //# sourceMappingURL=auth.js.map
