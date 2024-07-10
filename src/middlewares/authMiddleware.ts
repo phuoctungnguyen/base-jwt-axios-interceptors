@@ -36,6 +36,7 @@ const isAuthorized = async (
       accessKeySignature
     );
     req.jwtDecoded = accessTokenDecoded;
+    // console.log(accessTokenDecoded, "accessTokenDecoded");
     next();
   } catch (error) {
     console.log(error, "error from middleware");

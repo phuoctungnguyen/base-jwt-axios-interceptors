@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logout = exports.login = exports.registerUser = void 0;
+exports.refreshToken = exports.logout = exports.login = exports.registerUser = void 0;
 const UserModel_1 = __importDefault(require("../models/UserModel"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const ms_1 = __importDefault(require("ms"));
@@ -87,4 +87,19 @@ const logout = async (_req, res) => {
     }
 };
 exports.logout = logout;
+const refreshToken = async (req, res) => {
+    var _a;
+    try {
+        const refreshTokenFromBody = (_a = req.body) === null || _a === void 0 ? void 0 : _a.refreshToken;
+        const refreshTokenDecoded = await JwtProvider_1.JwtProvider.verifyToken(refreshTokenFromBody, refreshKeySignature);
+        const _b = refreshTokenDecoded, { exp } = _b, others = __rest(_b, ["exp"]);
+        const user = others;
+        const accessToken = await JwtProvider_1.JwtProvider.generateToken(user, accessKeySignature, "600s");
+        res.status(200).json(accessToken);
+    }
+    catch (err) {
+        res.status(500).json("refresh token api Faild.");
+    }
+};
+exports.refreshToken = refreshToken;
 //# sourceMappingURL=AuthControllers.js.map
