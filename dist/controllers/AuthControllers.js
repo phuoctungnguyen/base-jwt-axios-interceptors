@@ -53,8 +53,8 @@ const login = async (req, res) => {
             return;
         }
         if (user && validPassword) {
-            const accessToken = await JwtProvider_1.JwtProvider.generateToken(user, accessKeySignature, "600s");
-            const refreshToken = await JwtProvider_1.JwtProvider.generateToken(user, refreshKeySignature, "14d");
+            const accessToken = await JwtProvider_1.JwtProvider.generateToken(user, accessKeySignature, "10s");
+            const refreshToken = await JwtProvider_1.JwtProvider.generateToken(user, refreshKeySignature, "30s");
             res.cookie("accessToken", accessToken, {
                 httpOnly: true,
                 secure: true,
@@ -92,9 +92,9 @@ const refreshToken = async (req, res) => {
     try {
         const refreshTokenFromBody = (_a = req.body) === null || _a === void 0 ? void 0 : _a.refreshToken;
         const refreshTokenDecoded = await JwtProvider_1.JwtProvider.verifyToken(refreshTokenFromBody, refreshKeySignature);
-        const _b = refreshTokenDecoded, { exp } = _b, others = __rest(_b, ["exp"]);
+        const _b = refreshTokenDecoded, { iat, exp, __v, updatedDate, createdDate, password } = _b, others = __rest(_b, ["iat", "exp", "__v", "updatedDate", "createdDate", "password"]);
         const user = others;
-        const accessToken = await JwtProvider_1.JwtProvider.generateToken(user, accessKeySignature, "600s");
+        const accessToken = await JwtProvider_1.JwtProvider.generateToken(user, accessKeySignature, "10s");
         res.status(200).json(accessToken);
     }
     catch (err) {
