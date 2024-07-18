@@ -12,6 +12,10 @@ interface UserDocument extends Document {
   password: string;
   admin: boolean;
   exp: any;
+  __v: number;
+  createdDate: Date;
+  updatedDate: Date;
+  iat: number;
 }
 // interface JwtPayload {
 //   id: string;
@@ -59,15 +63,17 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
     if (user && validPassword) {
+      // console.log(user._id, "user");
+
       const accessToken = await JwtProvider.generateToken(
         user,
         accessKeySignature,
-        "600s"
+        "10s"
       );
       const refreshToken = await JwtProvider.generateToken(
         user,
         refreshKeySignature,
-        "14d"
+        "30s"
       );
       res.cookie("accessToken", accessToken, {
         httpOnly: true,
@@ -109,6 +115,7 @@ export const refreshToken = async (
 
     // cach 2 từ localstorage phía FE sẽ truyền vào body khi gọi api
     const refreshTokenFromBody = req.body?.refreshToken;
+    // console.log(req, "reqqqqqqqqq");
 
     // verif giải mã cái refreshToken xem có hợp lệ hay không
 
@@ -119,20 +126,15 @@ export const refreshToken = async (
     );
     // console.log(refreshTokenDecoded, "refreshTokenDecoded");
     // Đoạn này chúng ta chỉ cần lưu nhữg thông tin uique và cố định của user trong token rồi vì vậy có thể lấy luôn từ decode ra tiết kiệm query từ DB để lấy data mới
-    // const userInfo = {
-    //   id: refreshTokenDecoded._id as JwtPayload,
-    // };
-    // const user = {
-    //   id: refreshTokenDecoded._id,
-    // } as UserDocument;
-    const { exp, ...others } = refreshTokenDecoded as UserDocument;
+    const { iat, exp, __v, updatedDate, createdDate, password, ...others } =
+      refreshTokenDecoded as UserDocument;
     const user = others;
-    // console.log(others, "user");
+    // console.log(user, "user");
     // tạo accessToken mới
     const accessToken = await JwtProvider.generateToken(
       user,
       accessKeySignature,
-      "600s"
+      "10s"
     );
     // console.log(accessToken, "access token");
     // res lại cookie accessToken mới cho trường hợp sử dụg cookies
