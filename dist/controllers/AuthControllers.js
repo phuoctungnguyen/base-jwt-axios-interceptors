@@ -54,7 +54,7 @@ const login = async (req, res) => {
         }
         if (user && validPassword) {
             const accessToken = await JwtProvider_1.JwtProvider.generateToken(user, accessKeySignature, "10s");
-            const refreshToken = await JwtProvider_1.JwtProvider.generateToken(user, refreshKeySignature, "30s");
+            const refreshToken = await JwtProvider_1.JwtProvider.generateToken(user, refreshKeySignature, "120s");
             res.cookie("accessToken", accessToken, {
                 httpOnly: true,
                 secure: true,
@@ -94,7 +94,7 @@ const refreshToken = async (req, res) => {
         const refreshTokenDecoded = await JwtProvider_1.JwtProvider.verifyToken(refreshTokenFromBody, refreshKeySignature);
         const _b = refreshTokenDecoded, { iat, exp, __v, updatedDate, createdDate, password } = _b, others = __rest(_b, ["iat", "exp", "__v", "updatedDate", "createdDate", "password"]);
         const user = others;
-        const accessToken = await JwtProvider_1.JwtProvider.generateToken(user, accessKeySignature, "10s");
+        const accessToken = await JwtProvider_1.JwtProvider.generateToken(user, accessKeySignature, "30s");
         res.status(200).json(accessToken);
     }
     catch (err) {

@@ -73,7 +73,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       const refreshToken = await JwtProvider.generateToken(
         user,
         refreshKeySignature,
-        "30s"
+        "120s"
       );
       res.cookie("accessToken", accessToken, {
         httpOnly: true,
@@ -124,19 +124,16 @@ export const refreshToken = async (
       refreshTokenFromBody, // cach 2
       refreshKeySignature
     );
-    // console.log(refreshTokenDecoded, "refreshTokenDecoded");
     // Đoạn này chúng ta chỉ cần lưu nhữg thông tin uique và cố định của user trong token rồi vì vậy có thể lấy luôn từ decode ra tiết kiệm query từ DB để lấy data mới
     const { iat, exp, __v, updatedDate, createdDate, password, ...others } =
       refreshTokenDecoded as UserDocument;
     const user = others;
-    // console.log(user, "user");
     // tạo accessToken mới
     const accessToken = await JwtProvider.generateToken(
       user,
       accessKeySignature,
-      "10s"
+      "30s"
     );
-    // console.log(accessToken, "access token");
     // res lại cookie accessToken mới cho trường hợp sử dụg cookies
     // res.cookie("accessToken", accessToken, {
     //   httpOnly: true,
