@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.JwtProvider = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const generateToken = async (user, secretSignature, tokenLife) => {
+    console.log(secretSignature, "acccesssController");
     try {
         return jsonwebtoken_1.default.sign(user, secretSignature, {
             algorithm: "HS256",

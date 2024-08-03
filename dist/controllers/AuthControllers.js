@@ -53,6 +53,7 @@ const login = async (req, res) => {
             return;
         }
         if (user && validPassword) {
+            console.log(accessKeySignature, "acccesssController");
             const accessToken = await JwtProvider_1.JwtProvider.generateToken(user, accessKeySignature, "10s");
             const refreshToken = await JwtProvider_1.JwtProvider.generateToken(user, refreshKeySignature, "120s");
             res.cookie("accessToken", accessToken, {

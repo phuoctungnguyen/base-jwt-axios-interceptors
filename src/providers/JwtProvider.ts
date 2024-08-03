@@ -12,6 +12,8 @@ const generateToken = async (
   secretSignature: Secret,
   tokenLife: string | number
 ): Promise<string> => {
+  console.log(secretSignature, "acccesssController");
+
   try {
     return JWT.sign(user, secretSignature, {
       algorithm: "HS256",

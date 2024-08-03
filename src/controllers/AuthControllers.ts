@@ -64,6 +64,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
     if (user && validPassword) {
       // console.log(user._id, "user");
+      // console.log(accessKeySignature, "acccesssController"); 
 
       const accessToken = await JwtProvider.generateToken(
         user,
